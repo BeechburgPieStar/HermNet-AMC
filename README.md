@@ -17,29 +17,6 @@ Official PyTorch implementation of **HermNet**, a lightweight Hermitian-covarian
 
 ---
 
-## Architecture
-
-```
-IQ signal  [B, 2, 1024]
-   │
-   ▼  iq_to_complex
-Complex frontend
-   ├─ ComplexConv1d (k=5, s=2)
-   ├─ ComplexConv1d (k=5, s=2)  ─►  HCA  (Hermitian Covariance Attention)
-   └─ ComplexConv1d (k=5, s=2)  ─►  HCA
-   │
-   ▼
-Amplitude–Phase Fusion   (|Z| ⊕ ∠Z  →  Conv-BN-ReLU ×2)
-   │
-   ▼
-Multi-Scale Gated Temporal  ×K   (DWConv{3,5,7} + GLU, residual)
-   │
-   ▼
-Global Average Pooling  →  Classifier  →  logits
-```
-
----
-
 ## Repository Structure
 
 ```
@@ -56,17 +33,22 @@ Global Average Pooling  →  Classifier  →  logits
 
 ---
 
-## Installation
+## Requirements
+
+- Python >= 3.9
+- PyTorch >= 2.0
+- numpy
+- scipy
+- h5py
+- torchsummary
+
+This version of the code has been tested on **PyTorch 2.5.1** with an **NVIDIA RTX 3090**.
 
 ```bash
 git clone https://github.com/BeechburgPieStar/HermNet-AMC.git
 cd HermNet-AMC
-
-# Python 3.9+ recommended
-pip install torch numpy scipy h5py torchsummary
+pip install torch==2.5.1 numpy scipy h5py torchsummary
 ```
-
-Reference environment (from the paper): **PyTorch 2.5.1**, **NVIDIA RTX 3090**.
 
 ---
 
@@ -86,7 +68,14 @@ The **CD2025** OTA dataset is collected with an **ADALM-Pluto SDR** frontend und
 - **500** samples per (modulation, distance) pair → **10,000** samples per scenario → **40,000** total
 - Each sample: **1024 complex baseband points**, stored as I/Q of shape `[N, 2, 1024]`
 
-Expected layout (HDF5 files with keys `X` and `Y`):
+### Download
+
+The **CD2025** dataset is hosted on Baidu Netdisk:
+
+> **Baidu Netdisk:** <https://pan.baidu.com/s/1asKM4AI7Mf6ExAQl7q2UpQ>
+> **Access code:** `3uux`
+
+After downloading, extract the archive so that the four `.h5` files are placed directly under `./dataset/CD2025/`, keeping the file names unchanged. The expected directory structure is:
 
 ```
 dataset/
@@ -97,7 +86,7 @@ dataset/
     └── L4.h5
 ```
 
-Signals are power-normalized per sample at load time (`power_normalization_new`).
+Each `.h5` file is an HDF5 container with two keys: `X` (signals, shape `[N, 2, 1024]`) and `Y` (integer labels). Signals are power-normalized per sample at load time (`power_normalization_new`).
 
 ---
 
@@ -221,12 +210,6 @@ We also thank the maintainers of the **AMR-Benchmark**, a unified implementation
 
 ---
 
-## Rights and License
+## License
 
-Copyright © 2026 The Authors. All rights reserved.
-
-This repository and its contents are released **for academic and non-commercial research purposes only**. You are permitted to use, copy, and modify the code for such purposes, provided that appropriate credit is given and the associated paper is cited (see [Citation](#citation)). Any commercial use, redistribution for profit, or use in a manner not expressly permitted herein requires the prior written consent of the authors.
-
-The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. In no event shall the authors be liable for any claim, damages, or other liability arising from, out of, or in connection with the software or its use.
-
-All third-party baseline implementations referenced in the [Acknowledgements](#acknowledgements) remain the property of their respective authors and are subject to their own licenses.
+This code is distributed under an MIT License. Note that our code depends on other libraries and datasets, which each have their own respective licenses that must also be followed.
