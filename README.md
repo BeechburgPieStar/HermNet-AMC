@@ -1,4 +1,4 @@
-**Harnessing Second-Order Statistics for Cross-Scenario Over-the-Air Modulation Classification**
+## Harnessing Second-Order Statistics for Cross-Scenario Over-the-Air Modulation Classification
 
 Official PyTorch implementation of **HermNet**, a lightweight Hermitian-covariance-driven network for cross-scenario automatic modulation classification (AMC). HermNet learns modulation-discriminative representations that stay robust across **unseen** over-the-air (OTA) scenarios — without any access to target-domain data.
 
