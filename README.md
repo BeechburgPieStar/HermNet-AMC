@@ -175,7 +175,7 @@ If you find this work useful, please consider citing:
              Over-the-Air Modulation Classification},
   journal = {IEEE Wireless Communications Letters},
   year    = {2026},
-  note    = {submitted}
+  note    = {doi: 10.1109/LWC.2026.3733129}
 }
 ```
 
