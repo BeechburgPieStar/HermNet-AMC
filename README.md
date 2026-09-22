@@ -174,7 +174,10 @@ If you find this work useful, please consider citing:
   title   = {Harnessing Second-Order Statistics for Cross-Scenario
              Over-the-Air Modulation Classification},
   journal = {IEEE Wireless Communications Letters},
-  year    = {2026},
+  year={2026},
+  volume={15},
+  number={},
+  pages={5313-5317},
   note    = {doi: 10.1109/LWC.2026.3733129}
 }
 ```
